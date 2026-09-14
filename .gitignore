@@ -1,0 +1,16 @@
+# Ignore dataset contents so large CSVs are not pushed
+# Keep only the directory structure placeholders.
+datasets/**
+!datasets/.gitkeep
+!datasets/NS3-Refereence/
+!datasets/NS3-Refereence/.gitkeep
+!datasets/observe_ds/
+!datasets/observe_ds/.gitkeep
+!datasets/observe_ds/Situation_1/
+!datasets/observe_ds/Situation_1/.gitkeep
+!datasets/observe_ds/Situation_2/
+!datasets/observe_ds/Situation_2/.gitkeep
+!datasets/observe_ds/Situation_3/
+!datasets/observe_ds/Situation_3/.gitkeep
+!datasets/splits/
+!datasets/splits/.gitkeep

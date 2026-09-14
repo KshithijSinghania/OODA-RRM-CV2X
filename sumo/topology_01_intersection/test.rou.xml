@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<routes>
+
+    <!-- =========================================================
+         VEHICLE TYPE
+         ========================================================= -->
+
+    <vType
+        id="car"
+        accel="2.6"
+        decel="4.5"
+        sigma="0.5"
+        length="5.0"
+        minGap="2.5"
+        maxSpeed="13.89"
+    />
+
+
+    <!-- =========================================================
+         ROUTES
+         Based on the actual edge IDs in test_network.net.xml
+         ========================================================= -->
+
+    <!-- West -> East -->
+    <route
+        id="west_east"
+        edges="left2A2 A2B2 B2C2 C2right2"
+    />
+
+    <!-- East -> West -->
+    <route
+        id="east_west"
+        edges="right2C2 C2B2 B2A2 A2left2"
+    />
+
+    <!-- South -> North -->
+    <route
+        id="south_north"
+        edges="bottom1B0 B0B1 B1B2 B2top1"
+    />
+
+    <!-- North -> South -->
+    <route
+        id="north_south"
+        edges="top1B2 B2B1 B1B0 B0bottom1"
+    />
+
+
+    <!-- =========================================================
+         VEHICLES
+         IMPORTANT:
+         Vehicles MUST be sorted by departure time.
+         ========================================================= -->
+
+    <!-- t = 0 s -->
+    <vehicle
+        id="V_W001"
+        type="car"
+        route="west_east"
+        depart="0"
+    />
+
+    <!-- t = 1 s -->
+    <vehicle
+        id="V_E001"
+        type="car"
+        route="east_west"
+        depart="1"
+    />
+
+    <!-- t = 2 s -->
+    <vehicle
+        id="V_W002"
+        type="car"
+        route="west_east"
+        depart="2"
+    />
+
+    <!-- t = 3 s -->
+    <vehicle
+        id="V_E002"
+        type="car"
+        route="east_west"
+        depart="3"
+    />
+
+    <!-- t = 4 s -->
+    <vehicle
+        id="V_W003"
+        type="car"
+        route="west_east"
+        depart="4"
+    />
+
+    <!-- t = 5 s -->
+    <vehicle
+        id="V_E003"
+        type="car"
+        route="east_west"
+        depart="5"
+    />
+
+    <!-- t = 6 s -->
+    <vehicle
+        id="V_W004"
+        type="car"
+        route="west_east"
+        depart="6"
+    />
+
+    <!-- t = 7 s -->
+    <vehicle
+        id="V_N001"
+        type="car"
+        route="north_south"
+        depart="7"
+    />
+
+    <!-- t = 8 s -->
+    <vehicle
+        id="V_S001"
+        type="car"
+        route="south_north"
+        depart="8"
+    />
+
+    <!-- t = 10 s -->
+    <vehicle
+        id="V_S002"
+        type="car"
+        route="south_north"
+        depart="10"
+    />
+
+    <!-- t = 12 s -->
+    <vehicle
+        id="V_N002"
+        type="car"
+        route="north_south"
+        depart="12"
+    />
+
+</routes>

@@ -12,32 +12,32 @@ import numpy as np
 # CONFIGURATION
 # ============================================================
 
-INPUT_DIR = r"datasets\\observe_ds\Situation_3\indore_03_telemetry_v1.csv"
+INPUT_DIR = r"datasets\\observe_ds\Situation_4\indore_04_telemetry_v1.csv"
 
-# Use the full Situation 3 telemetry file directly.
+# Use the full Situation 4 telemetry file directly.
 # No split CSVs are available for this dataset.
 INPUT_PATTERN = INPUT_DIR
 
 OUTPUT_DIR = os.path.join(
-    r"datasets\\observe_ds\Situation_3",
-    "situation3_context"
+    r"datasets\\observe_ds\Situation_4",
+    "situation4_context"
 )
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 CONTEXT_CSV = os.path.join(
     OUTPUT_DIR,
-    "situation3_vehicle_context.csv"
+    "situation4_vehicle_context.csv"
 )
 
 CONTEXT_JSON = os.path.join(
     OUTPUT_DIR,
-    "situation3_context.json"
+    "situation4_context.json"
 )
 
 CONTEXT_TXT = os.path.join(
     OUTPUT_DIR,
-    "situation3_context.txt"
+    "situation4_context.txt"
 )
 
 
@@ -110,7 +110,7 @@ if not files:
     )
 
 print("=" * 70)
-print("SITUATION-1 TELEMETRY CONTEXT EXTRACTION")
+print("SITUATION-4 TELEMETRY CONTEXT EXTRACTION")
 print("=" * 70)
 
 print("\nInput files found:", len(files))
@@ -701,7 +701,7 @@ vehicle_context.to_csv(
 # ============================================================
 
 context = {
-    "scenario": "Indore-01",
+    "scenario": "Indore-04",
     "purpose":
         "Compact SUMO telemetry context for "
         "ns-3-calibrated C-V2X network modeling",
@@ -788,7 +788,7 @@ with open(
     )
 
     f.write(
-        "INDORE-01 TELEMETRY CONTEXT REPORT\n"
+        "INDORE-04 TELEMETRY CONTEXT REPORT\n"
     )
 
     f.write(

@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ooda://act_command",
+  "title": "Act Output (Act -> O-RAN A1/E2, Observe, Decide/Orient) -- PLACEHOLDER O-RAN names, see ASSUMPTIONS.md",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "a1_policy",
+    "e2_control",
+    "escalation",
+    "feedback_to_observe"
+  ],
+  "properties": {
+    "a1_policy": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "description": "null when the policy was rejected before execution",
+      "required": [
+        "policy_type_id",
+        "policy_instance_id",
+        "scope",
+        "statement"
+      ],
+      "properties": {
+        "policy_type_id": {
+          "const": "CV2X-RRM-POLICY-1"
+        },
+        "policy_instance_id": {
+          "type": "string",
+          "pattern": "^P-[A-Za-z0-9_-]+$"
+        },
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cell_id"
+          ],
+          "properties": {
+            "cell_id": {
+              "type": "string"
+            }
+          }
+        },
+        "statement": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "valid_for_ms",
+            "class_priority",
+            "preemption_enabled"
+          ],
+          "properties": {
+            "valid_for_ms": {
+              "type": "integer"
+            },
+            "class_priority": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "urllc",
+                  "embb",
+                  "mmtc"
+                ]
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "preemption_enabled": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "e2_control": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "ran_function",
+          "action",
+          "params"
+        ],
+        "properties": {
+          "ran_function": {
+            "enum": [
+              "RC-PRB-QUOTA",
+              "RC-TX-POWER",
+              "RC-MEC-OFFLOAD",
+              "RC-INTERFERENCE",
+              "RC-PREEMPT"
+            ]
+          },
+          "action": {
+            "type": "string"
+          },
+          "params": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "escalation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "escalate",
+        "reason",
+        "target"
+      ],
+      "properties": {
+        "escalate": {
+          "type": "boolean"
+        },
+        "reason": {
+          "enum": [
+            "none",
+            "malformed_policy",
+            "constraint_violation",
+            "spoofed_feedback",
+            "policy_execution_failure",
+            "scenario_change",
+            "qos_violation_persists",
+            "qos_violation_onset"
+          ]
+        },
+        "target": {
+          "enum": [
+            "none",
+            "decide",
+            "orient"
+          ]
+        }
+      }
+    },
+    "feedback_to_observe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_applied",
+        "feedback_trusted",
+        "watch_metrics"
+      ],
+      "properties": {
+        "policy_applied": {
+          "type": "boolean"
+        },
+        "feedback_trusted": {
+          "type": "boolean"
+        },
+        "watch_metrics": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "packet_loss",
+              "delay",
+              "jitter",
+              "throughput",
+              "congestion"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

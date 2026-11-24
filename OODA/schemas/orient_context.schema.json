@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ooda://orient_context",
+  "title": "ContextObject (Orient -> Decide)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "scenario_tag",
+    "confidence",
+    "qos_weights",
+    "constraint_overrides",
+    "active_intents",
+    "intent_resolution",
+    "rag_refs",
+    "rationale"
+  ],
+  "properties": {
+    "scenario_tag": {
+      "enum": [
+        "baseline",
+        "platoon_stable",
+        "platoon_merge",
+        "emergency_preempt",
+        "intersection_dense",
+        "handover_imminent"
+      ]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "qos_weights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "urllc",
+        "embb",
+        "mmtc"
+      ],
+      "properties": {
+        "urllc": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "embb": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "mmtc": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "constraint_overrides": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "urllc_min_prb_share_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "embb_max_prb_share_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "preempt_vehicle_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "max_policy_latency_ms": {
+          "type": "number",
+          "minimum": 1
+        },
+        "tx_power_cap_dbm": {
+          "type": "number",
+          "minimum": -10,
+          "maximum": 23
+        }
+      }
+    },
+    "active_intents": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "safety_first",
+          "emergency_priority",
+          "throughput_fairness",
+          "energy_saving",
+          "regulatory_compliance",
+          "oem_qos_contract"
+        ]
+      }
+    },
+    "rag_refs": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "TS22.186",
+          "TR36.885",
+          "TS28.312",
+          "NRV2X-MODE1",
+          "NRV2X-MODE2",
+          "ROAD-EVENT-ONTOLOGY",
+          "TMC-REG"
+        ]
+      },
+      "maxItems": 5
+    },
+    "rationale": {
+      "type": "string",
+      "maxLength": 400
+    },
+    "intent_resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "conflict_type",
+        "suppressed_intents"
+      ],
+      "properties": {
+        "conflict_type": {
+          "enum": [
+            "none",
+            "emergency_vs_oem_qos",
+            "safety_vs_throughput",
+            "energy_vs_reliability",
+            "regulation_vs_operator_slo"
+          ]
+        },
+        "suppressed_intents": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "safety_first",
+              "emergency_priority",
+              "throughput_fairness",
+              "energy_saving",
+              "regulatory_compliance",
+              "oem_qos_contract"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

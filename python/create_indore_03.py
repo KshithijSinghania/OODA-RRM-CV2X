@@ -28,7 +28,7 @@ OUTPUT_TRIPS = os.path.join(
 # ============================================================
 
 # 3x baseline demand
-TRAFFIC_MULTIPLIER = 3.0
+TRAFFIC_MULTIPLIER = 1.0
 
 RANDOM_SEED = 303
 

@@ -1,0 +1,384 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ooda://observe_summary",
+  "title": "ObserveSummary (Observe -> Orient)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "window_s",
+    "scope",
+    "n_active_vehicles",
+    "load_level",
+    "qos_status",
+    "trend",
+    "mobility",
+    "v2x_messages",
+    "resource_state",
+    "hotspots",
+    "anomalies",
+    "special_events",
+    "narrative"
+  ],
+  "properties": {
+    "window_s": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "cell_id"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "network",
+            "cell"
+          ]
+        },
+        "cell_id": {
+          "type": "string"
+        }
+      }
+    },
+    "n_active_vehicles": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "load_level": {
+      "enum": [
+        "low",
+        "moderate",
+        "high",
+        "very_high"
+      ]
+    },
+    "qos_status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "severity",
+        "frac_loss_gt_10pct",
+        "frac_delay_gt_thr",
+        "frac_delay_gt_100ms",
+        "mean_loss_pct",
+        "p95_loss_pct",
+        "mean_delay_ms",
+        "mean_jitter_ms",
+        "mean_throughput_mbps"
+      ],
+      "properties": {
+        "severity": {
+          "enum": [
+            "nominal",
+            "elevated",
+            "degraded",
+            "critical"
+          ]
+        },
+        "frac_loss_gt_10pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "frac_delay_gt_thr": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "frac_delay_gt_100ms": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "mean_loss_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "p95_loss_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "mean_delay_ms": {
+          "type": "number",
+          "minimum": 0
+        },
+        "mean_jitter_ms": {
+          "type": "number",
+          "minimum": 0
+        },
+        "mean_throughput_mbps": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "trend": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "qos",
+        "load",
+        "delta_loss_pp",
+        "delta_vehicles_pct"
+      ],
+      "properties": {
+        "qos": {
+          "enum": [
+            "improving",
+            "stable",
+            "worsening",
+            "unknown"
+          ]
+        },
+        "load": {
+          "enum": [
+            "ramping_up",
+            "steady",
+            "draining",
+            "unknown"
+          ]
+        },
+        "delta_loss_pp": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "delta_vehicles_pct": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "mobility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mean_speed_mps",
+        "frac_stationary",
+        "mean_wait_s"
+      ],
+      "properties": {
+        "mean_speed_mps": {
+          "type": "number",
+          "minimum": 0
+        },
+        "frac_stationary": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "mean_wait_s": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "hotspots": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "edges",
+        "vehicles_at_risk"
+      ],
+      "properties": {
+        "edges": {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "type": "string"
+          }
+        },
+        "vehicles_at_risk": {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "anomalies": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "loss_spike",
+          "high_delay_tail",
+          "standstill_cluster",
+          "high_jitter",
+          "throughput_drop"
+        ]
+      }
+    },
+    "special_events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type",
+          "vehicle_id",
+          "in_scope",
+          "n_vehicles_within_300m",
+          "nearest_vehicle_dist_m",
+          "link_loss_pct",
+          "link_delay_ms"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "emergency_vehicle"
+            ]
+          },
+          "vehicle_id": {
+            "type": "string"
+          },
+          "in_scope": {
+            "type": "boolean",
+            "description": "emergency vehicle itself is inside this zone/scope"
+          },
+          "n_vehicles_within_300m": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "nearest_vehicle_dist_m": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "link_loss_pct": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "link_delay_ms": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "narrative": {
+      "type": "string",
+      "maxLength": 420
+    },
+    "v2x_messages": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mean_rate_hz",
+        "frac_alert_rate"
+      ],
+      "properties": {
+        "mean_rate_hz": {
+          "type": "number",
+          "minimum": 0
+        },
+        "frac_alert_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "resource_state": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "required": [
+        "estimated",
+        "offered_load_ratio",
+        "interference_iot_db",
+        "mec_load_ratio",
+        "current_allocation"
+      ],
+      "description": "MODELLED stand-in for PRB occupancy / interference / MEC load (not in the traces); null for network scope",
+      "properties": {
+        "estimated": {
+          "const": true
+        },
+        "offered_load_ratio": {
+          "type": "number",
+          "minimum": 0
+        },
+        "interference_iot_db": {
+          "type": "number",
+          "minimum": 0
+        },
+        "mec_load_ratio": {
+          "type": "number",
+          "minimum": 0
+        },
+        "current_allocation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "prb_pct",
+            "power_dbm"
+          ],
+          "properties": {
+            "prb_pct": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "urllc",
+                "embb",
+                "mmtc"
+              ],
+              "properties": {
+                "urllc": {
+                  "type": "integer"
+                },
+                "embb": {
+                  "type": "integer"
+                },
+                "mmtc": {
+                  "type": "integer"
+                }
+              }
+            },
+            "power_dbm": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "urllc",
+                "embb",
+                "mmtc"
+              ],
+              "properties": {
+                "urllc": {
+                  "type": "number"
+                },
+                "embb": {
+                  "type": "number"
+                },
+                "mmtc": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

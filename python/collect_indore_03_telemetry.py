@@ -12,7 +12,7 @@ import traci
 # ============================================================
 
 SCENARIO_ID = "INDORE_03"
-SCENARIO_NAME = "HEAVY_CONGESTION"
+SCENARIO_NAME = "Medium Traffic"
 
 
 # ============================================================
@@ -20,8 +20,7 @@ SCENARIO_NAME = "HEAVY_CONGESTION"
 # ============================================================
 
 SUMO_CONFIG = (
-    r"C:\Users\jinda\Sumo\Indore-03"
-    r"\osm.sumocfg"
+   "sumo\Indore-03\osm.sumocfg"
 )
 
 

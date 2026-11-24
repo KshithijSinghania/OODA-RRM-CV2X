@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ooda://decide_policy",
+  "title": "Per-RSU policy P_OODA in the C-V2X Command DSL (Decide -> Act) -- PLACEHOLDER DSL, see ASSUMPTIONS.md",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "policy_id",
+    "valid_for_ms",
+    "prb_priority",
+    "power_budget_dbm",
+    "mec_offloading",
+    "interference_coordination",
+    "preemption"
+  ],
+  "properties": {
+    "policy_id": {
+      "type": "string",
+      "pattern": "^P-[A-Za-z0-9_-]+$"
+    },
+    "valid_for_ms": {
+      "type": "integer",
+      "minimum": 100,
+      "maximum": 5000
+    },
+    "prb_priority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "urllc_pct",
+        "embb_pct",
+        "mmtc_pct",
+        "priority_order"
+      ],
+      "properties": {
+        "urllc_pct": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "embb_pct": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "mmtc_pct": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "priority_order": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "urllc",
+              "embb",
+              "mmtc"
+            ]
+          }
+        }
+      }
+    },
+    "power_budget_dbm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "urllc",
+        "embb",
+        "mmtc"
+      ],
+      "description": "maximum transmit power per vehicle, per traffic class",
+      "properties": {
+        "urllc": {
+          "type": "number",
+          "minimum": -10,
+          "maximum": 23
+        },
+        "embb": {
+          "type": "number",
+          "minimum": -10,
+          "maximum": 23
+        },
+        "mmtc": {
+          "type": "number",
+          "minimum": -10,
+          "maximum": 23
+        }
+      }
+    },
+    "mec_offloading": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "offload_ratio",
+        "priority_class",
+        "compute_share_pct"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "none",
+            "selective",
+            "full"
+          ]
+        },
+        "offload_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "priority_class": {
+          "enum": [
+            "urllc",
+            "embb",
+            "mmtc"
+          ]
+        },
+        "compute_share_pct": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "urllc",
+            "embb",
+            "mmtc"
+          ],
+          "properties": {
+            "urllc": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "embb": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "mmtc": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            }
+          }
+        }
+      }
+    },
+    "interference_coordination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "strategy",
+        "reuse_factor"
+      ],
+      "properties": {
+        "strategy": {
+          "enum": [
+            "none",
+            "frequency_reuse",
+            "sidelink_mode1_scheduling",
+            "power_backoff_edge"
+          ]
+        },
+        "reuse_factor": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4
+        }
+      }
+    },
+    "preemption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled",
+        "vehicle_ids"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "vehicle_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
